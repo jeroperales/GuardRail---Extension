@@ -1,0 +1,10 @@
+{
+  "name": "Guardrail Extension",
+  "description": "Extension test to keep you safe, detect links",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "public/guardrail.png"
+  }
+}
