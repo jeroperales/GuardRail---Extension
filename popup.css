@@ -1,0 +1,35 @@
+body {
+    width: 350px;
+    height: 450px;
+    box-sizing: border-box;
+    background-color: rgba(0, 255, 255, 0.212);
+    margin: 0;
+    padding: 20px;
+    
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+
+}
+
+.basicButton {
+    width: 100%;
+    height: 40px;  
+    margin-top: 10px;
+
+    background-color: #afbbc0;
+    border: 2px solid black;
+
+    font-size: 14px;
+}
+
+
+.placeholder {
+    width: 100%;
+    height: 180px;
+     overflow: auto;
+    background-color: #c0c0c0;
+    border: 3px solid black;
+}
