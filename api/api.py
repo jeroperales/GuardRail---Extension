@@ -18,23 +18,18 @@ Function 1 - taking in a Link/Url and comparing it to potential malicicous links
 
 What we want to catch:
 - Brand impersonation (phising scheames)
-- Known malicious links
+- Known malicious links 
+- Detecting if a site is malicious 
 
-methods:
-- get data using external APIs and compare it to the data to the link to detect malicious activity 
-  - Virus Total API
-  - urlscan.io API
-  - Google Safe Browsing API `
-  - incorperate more than the current API based on the chance some APIs cannot parse some sites due to anti botting, solution is use multiple tools
-    incorperate a final score of the likelyhood a site is malicious 
-"""
-
-"""
-TODO 
+TODO:
 
 - Get Url (done)
 - Extract the verdict from the API call (done)
-- Pass that verdict to the front-end
+- Pass that verdict to the front-end (done)
+
+Milestones:
+- Established getting data from the API and inputting it to the frontend (done)
+- Make this readable to the actual frontend itself 
 
 """
 @app.get("/")
