@@ -1,1 +1,8 @@
+//fetches the backends response and allows us to use it in the backend 
+fetch(" http://127.0.0.1:5000")
+  .then(res => res.json())
+  .then(data => {console.log(data.malicious)})
+
+
+
 console.log('TEST TEST TEST')
