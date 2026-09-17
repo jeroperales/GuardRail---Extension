@@ -371,14 +371,54 @@ body {
 
 
 /* LINK SCANNER FUNCTION */
-.hidden {
-  display: none;
+/* --- Layout & base --- */
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  width: 320px;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #eaf6ff 0%, #cdeaff 100%);
+  color: #1a1a1a;
 }
 
-.result {
-  margin-top: 10px;
-  padding: 10px;
+.scanner-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Input row --- */
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+#linkInput {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #a9d3ee;
   border-radius: 6px;
+  font-size: 13px;
+  outline: none;
+}
+
+#linkInput:focus {
+  border-color: #3b9ee5;
+  box-shadow: 0 0 0 2px rgba(59, 158, 229, 0.2);
+}
+
+
+/* --- Result box --- */
+.result {
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.hidden {
+  display: none;
 }
 
 .safe       { background: #d4edda; color: #155724; }
@@ -387,3 +427,17 @@ body {
 .warning    { background: #fff3cd; color: #856404; }
 .loading    { background: #e2e3e5; color: #383d41; }
 
+/* --- Back button --- */
+#backBtn {
+  padding: 10px;
+  background: white;
+  border: 1px solid #a9d3ee;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+#backBtn:hover {
+  background: #f0f8ff;
+}

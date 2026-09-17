@@ -33,7 +33,7 @@ Milestones:
 
 """
 @app.get("/")
-def getData():
+def getData(link: str):
 # Creates a URL Scan tied to the UUID, The UUID is needed to exactract the verdict if a URL sight is Malicious 
     r = httpx.post(
          f"https://api.cloudflare.com/client/v4/accounts/{AccountID}/urlscanner/v2/scan",
