@@ -1,5 +1,5 @@
 <head>
-    <link rel="stylesheet" href="linkScannerFunction.css">
+   <link rel="stylesheet" href="/../../style.css">
 </head>
 
 <html>
@@ -22,8 +22,26 @@
 
   <body>
 
+
+<div class="scanner-container">
+        <input type="text" id="linkInput" placeholder="Paste a link to check...">
+         <button id="scanBtn">Analyze Link</button>
+
+         <!-- WILL NOT SHOW UNTIL JAVA SCRIOPT RETURNS SOMETHING -->
+    <div id="resultBox" class="result hidden">  
+    <p id="resultText"></p>
+    </div>
+
+</div>
+
+
+  </body>
+
+
+  <footer>
     <button class="basicButton" id="backButton">  BACK </button>
     
     <script src="linkScannerFunction.js"></script> 
-  </body>
+    
+  </footer>
 </html>
