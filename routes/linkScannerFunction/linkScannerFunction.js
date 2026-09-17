@@ -19,6 +19,7 @@ scanButton.addEventListener('click', async ()=> {
 
  try {
     //SEND THE BACK END THE LINK COPIED
+    //so I need to catch the link data and ask for that data then have the fron end recieve it 
 
       throw new Error('TEST ERROR');
 
