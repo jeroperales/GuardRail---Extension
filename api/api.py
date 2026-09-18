@@ -55,26 +55,22 @@ Milestones:
 
 """
 
-# So we need to get the data from the front end to the backend, so we post it to our backend server
-@app.post("/scan/")
-async def getUrl(url: Url):
-    print(url)
-    return url
 
+"""
+Since data is being used at the same time we can combine the functions as one
 
-@app.get("/")
-def getData():
+"""
+
+def analyzeUrl(url):
 # Creates a URL Scan tied to the UUID, The UUID is needed to exactract the verdict if a URL sight is Malicious
-    urlToScan = ""
     r = httpx.post(
          f"https://api.cloudflare.com/client/v4/accounts/{AccountID}/urlscanner/v2/scan",
-         json={"url": f"https://{urlToScan}"},
+         json={"url": f"https://{url}"},
          headers={"Authorization": f"Bearer {apiKey}"},
     )
     data = r.json()
-    print(data)
     uuid = data["uuid"]
-    print(data)
+
 #Use var uuid to access to get and access the data collected from the API
 #The cloudflare API Takes time to run Requiring 10 - 30 seconds, The Loop below will continue to check the status
     reportCall= f"https://api.cloudflare.com/client/v4/accounts/{AccountID}/urlscanner/v2/result/{uuid}"
@@ -86,7 +82,8 @@ def getData():
 
         if r.status_code == 200:
             reportJsonData = r.json()
-            return reportJsonData["verdicts"]["overall"]
+            print(reportJsonData)
+            return reportJsonData["verdicts"]["overall"]["malicious"]
 
         elif r.status_code == 404:
             print("Scan is still processing")
@@ -94,6 +91,18 @@ def getData():
 
         else:
             print("Unexpected Error has occurred")
+
+
+
+
+#Gets the link POSTED by the user 
+@app.post("/scan/")
+async def getUrl(url: Url):
+    scanResults = analyzeUrl(url.url)
+    return scanResults
+    
+
+
 
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
 if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5000)

@@ -12,15 +12,17 @@
 
 //fetches the backends response and allows us to use it in the backend
 
+const userInput = {
+  url: "Youtube.com"
+}
+
 fetch("http://127.0.0.1:5000/scan/", {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({
-    "url": "Youtube.com"
-    }),
+  body: JSON.stringify(userInput),
 })
 .then(resp => resp.json())
 .then(data => {
@@ -29,6 +31,13 @@ fetch("http://127.0.0.1:5000/scan/", {
   .catch(error => {
     console.error(error)
 })
+
+//fetch("http://127.0.0.1:5000/")
+  //.then(resp => resp.json())
+  //.then(data => {
+   // console.log(data)
+ // })
+
 
 
 //fetch(" http://127.0.0.1:5000")
