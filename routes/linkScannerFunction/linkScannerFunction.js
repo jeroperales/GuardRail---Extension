@@ -18,10 +18,17 @@ scanButton.addEventListener('click', async ()=> {
   showResult ('Analyzing... ', 'loading'); 
 
  try {
-    //SEND THE BACK END THE LINK COPIED
-    //so I need to catch the link data and ask for that data then have the fron end recieve it 
+    const response = await fetch("http://127.0.0.1:5000/scan/", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ "url": link })
+    });
 
-      throw new Error('TEST ERROR');
+    const data = await response.json();
+    displayVerdict(data);
 
   } catch (error) {
     showResult('Could not reach the scanner. Try again.', 'danger');
