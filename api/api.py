@@ -6,7 +6,8 @@ from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-#This allows specified domans to communicate with the backend
+
+#This allows specified domains to communicate with the backend
 app = FastAPI()
 origins = [
     "http://localhost.tiangolo.com",
@@ -43,12 +44,6 @@ What we want to catch:
 - Known malicious links 
 - Detecting if a site is malicious 
 
-TODO:
-
-- Get Url (done)
-- Extract the verdict from the API call (done)
-- Pass that verdict to the front-end (done)
-
 Milestones:
 - Established getting data from the API and inputting it to the frontend (done)
 - Make this readable to the actual frontend itself 
@@ -71,8 +66,8 @@ def analyzeUrl(url):
     data = r.json()
     uuid = data["uuid"]
 
-#Use var uuid to access to get and access the data collected from the API
-#The cloudflare API Takes time to run Requiring 10 - 30 seconds, The Loop below will continue to check the status
+#Use var uuid to get and access the data collected from the API
+#The cloudflare API Takes time to run Requiring 10 - 30 seconds, The Loop below will continue to check the status every 10 seconds 
     reportCall= f"https://api.cloudflare.com/client/v4/accounts/{AccountID}/urlscanner/v2/result/{uuid}"
     maxAttempts = 20
     reportJsonData = ""
@@ -92,17 +87,11 @@ def analyzeUrl(url):
         else:
             print("Unexpected Error has occurred")
 
-
-
-
-#Gets the link POSTED by the user 
+#Takes in the URL POSTed from the user and runs the process of analyzing the URL 
 @app.post("/scan/")
 async def getUrl(url: Url):
     scanResults = analyzeUrl(url.url)
     return scanResults
-    
-
-
 
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
 if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5000)

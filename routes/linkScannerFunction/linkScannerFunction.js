@@ -9,6 +9,10 @@ const resultText = document.getElementById('resultText'); // same thing as resul
 scanButton.addEventListener('click', async ()=> {
 
   const link = input.value.trim(); //recieves link and trims any excess in pasted link
+  
+  const userInput = {
+  url: link
+}
 
   if(!link) {
     showResult('Please paste a link first. ', 'warning');
@@ -28,7 +32,7 @@ scanButton.addEventListener('click', async ()=> {
     });
 
     const data = await response.json();
-    displayVerdict(data);
+    displayVerdict(data); // Returns : True or False
 
   } catch (error) {
     showResult('Could not reach the scanner. Try again.', 'danger');
@@ -37,21 +41,18 @@ scanButton.addEventListener('click', async ()=> {
 
 })
 
-function displayVerdict(data) {
-  const messages = {
-    safe: ` This link looks safe. ${data.reason || ''}`,
-    suspicious: ` This link looks suspicious. ${data.reason || ''}`,
-    dangerous: ` This link is likely dangerous. ${data.reason || ''}`
-  };
-
-  const level = data.safety || 'suspicious';
-  showResult(messages[level], level);
+function displayVerdict(verdict) {
+  if (verdict){
+    message = "No suspicious activity detected, his site is safe to visit"
+  }else {
+    message = "WAIT THIS SITE IS SUSPECTED TO BE MALICIOUS PROCEEED WITH CAUTION"
+  }
+  showResult(message);
 }
 
-function showResult(message, type) {
+function showResult(message) {
   resultText.textContent = message;
   resultBox.classList.remove('hidden', 'safe', 'suspicious', 'dangerous', 'warning', 'loading');
-  resultBox.classList.add(type);
 }
 
 
