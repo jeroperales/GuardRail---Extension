@@ -13,7 +13,7 @@ origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
     "http://localhost",
-    "http://localhost:8080",
+    "http://localhost:5050",
 ]
 
 app.add_middleware(
@@ -45,8 +45,8 @@ What we want to catch:
 - Detecting if a site is malicious 
 
 Milestones:
-- Established getting data from the API and inputting it to the frontend (done)
-- Make this readable to the actual frontend itself 
+- Separate 
+
 
 """
 
@@ -54,8 +54,11 @@ Milestones:
 """
 Since data is being used at the same time we can combine the functions as one
 
+- We need to use regex to detect https// in the beginning or not in both the frontend and backend
+- We need to detect edge cases such as .sites 
 """
 
+#Cloudflare API Request and Response 
 def analyzeUrl(url):
 # Creates a URL Scan tied to the UUID, The UUID is needed to exactract the verdict if a URL sight is Malicious
     r = httpx.post(
@@ -64,7 +67,9 @@ def analyzeUrl(url):
          headers={"Authorization": f"Bearer {apiKey}"},
     )
     data = r.json()
+    print(data)
     uuid = data["uuid"]
+    print(data)
 
 #Use var uuid to get and access the data collected from the API
 #The cloudflare API Takes time to run Requiring 10 - 30 seconds, The Loop below will continue to check the status every 10 seconds 
@@ -77,7 +82,7 @@ def analyzeUrl(url):
 
         if r.status_code == 200:
             reportJsonData = r.json()
-            print(reportJsonData)
+            # print(reportJsonData)
             return reportJsonData["verdicts"]["overall"]["malicious"]
 
         elif r.status_code == 404:
@@ -94,6 +99,6 @@ async def getUrl(url: Url):
     return scanResults
 
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
-if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=8080)
+if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5050)
 
 

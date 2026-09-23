@@ -15,14 +15,14 @@ scanButton.addEventListener('click', async ()=> {
 }
 
   if(!link) {
-    showResult('Please paste a link first. ', 'warning');
+    showResult('Please paste a link first. ');
     return;
   }  
 
-  showResult ('Analyzing... '); 
+  showResult ('Analyzing..'); 
 
  try {
-    const response = await fetch("http://127.0.0.1:8080/scan/", {
+    const response = await fetch("http://127.0.0.1:5050/scan/", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -42,10 +42,12 @@ scanButton.addEventListener('click', async ()=> {
 })
 
 function displayVerdict(verdict) {
-  if (verdict){
+  if (!verdict){
     message = "No suspicious activity detected, his site is safe to visit"
-  }else {
+  }else if (verdict) {
     message = "WAIT THIS SITE IS SUSPECTED TO BE MALICIOUS PROCEEED WITH CAUTION"
+  }else{
+    message = "Uh oh! the URL you entered may be invalid please try again"
   }
   showResult(message);
 }
