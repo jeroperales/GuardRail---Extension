@@ -94,6 +94,6 @@ async def getUrl(url: Url):
     return scanResults
 
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
-if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5000)
+if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=8080)
 
 

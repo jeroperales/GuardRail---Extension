@@ -19,16 +19,16 @@ scanButton.addEventListener('click', async ()=> {
     return;
   }  
 
-  showResult ('Analyzing... ', 'loading'); 
+  showResult ('Analyzing... '); 
 
  try {
-    const response = await fetch("http://127.0.0.1:5000/scan/", {
+    const response = await fetch("http://127.0.0.1:8080/scan/", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ "url": link })
+      body: JSON.stringify(userInput)
     });
 
     const data = await response.json();
