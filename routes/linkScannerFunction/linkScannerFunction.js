@@ -30,9 +30,14 @@ scanButton.addEventListener('click', async ()=> {
       },
       body: JSON.stringify(userInput)
     });
-
-    const data = await response.json();
-    displayVerdict(data); // Returns : True or False
+    // if error return error text else send valid json with data 
+    if (!response.ok){
+      data = await response.text() //Returns a string stating the user input an invalid url 
+      displayVerdict(data)
+    }else{
+      const data = await response.json(); // Returns : True or False OR object returning an object
+      displayVerdict(data); 
+    }
 
   } catch (error) {
     showResult('Could not reach the scanner. Try again.', 'danger');
@@ -42,9 +47,9 @@ scanButton.addEventListener('click', async ()=> {
 })
 
 function displayVerdict(verdict) {
-  if (!verdict){
+  if (verdict === false){
     message = "No suspicious activity detected, his site is safe to visit"
-  }else if (verdict) {
+  }else if (verdict === true) {
     message = "WAIT THIS SITE IS SUSPECTED TO BE MALICIOUS PROCEEED WITH CAUTION"
   }else{
     message = "Uh oh! the URL you entered may be invalid please try again"
