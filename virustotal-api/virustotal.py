@@ -46,22 +46,28 @@ filetest = { "file": ('virustester.txt', open('virustester.txt', "rb"), "") }
 def analyzeFile(files):
 
     r = httpx.post(
-        url="https://www.virustotal.com/api/v3/files",
+        url='https://www.virustotal.com/api/v3/files',
         files=files,
         headers={
             "x-apikey": apiKey,
             "accept": "application/json"
-        }
+        },
+        timeout=60.0
     )
 
     print (r.status_code)
     print(r.text)
 
+    data = r.json()
+
+
+    print(f'THIS IS THE ANALYSIS KEY!!!!: ', {data["data"]["id"]})
+
+  
+
 
     
 analyzeFile(filetest)
-
-
 
 
 
