@@ -1,34 +1,112 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="styletest.css">
+  <meta charset="UTF-8">
+  <title>GuardRail</title>
+  <link rel="stylesheet" href="styletest.css">
 </head>
 
-<html>
+<body>
 
-    <header class="header">
-
-    <div class="logoOrb">
-        <span>G</span>
-    </div>
-
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="logoOrb"><span>G</span></div>
     <div class="headerText">
-        <h1>GUARDRAIL</h1>
-        <span>WEB SAFETY EXTENSION</span>
+      <h1>GUARDRAIL</h1>
+      <span>WEB SAFETY EXTENSION</span>
     </div>
+    <div class="statusLight" title="Protection active"></div>
+  </header>
 
-    <div class="statusLight"></div>
+  <main class="app">
 
-</header>
+    <!-- Tab state (CSS-only switching) -->
+    <input type="radio" name="tab" id="tab-link" class="tabRadio" checked>
+    <input type="radio" name="tab" id="tab-file" class="tabRadio">
+    <input type="radio" name="tab" id="tab-text" class="tabRadio">
 
+    <!-- ===== TAB NAV ===== -->
+    <nav class="tabs">
+      <label for="tab-link" class="tab">
+        <svg viewBox="0 0 24 24"><path d="M10 14a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5M14 10a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>
+        Link
+      </label>
+      <label for="tab-file" class="tab">
+        <svg viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>
+        File
+      </label>
+      <label for="tab-text" class="tab">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3z"/></svg>
+        Message
+      </label>
+      <span class="tabIndicator"></span>
+    </nav>
 
-  <body>
+    <div class="panels">
 
-    <div class="placeholder"> POTENTIAL BUTTON, ANSWER TO SCAN, RESULT, ETC. ETC. ETC </div>
-    <button class="basicButton" id="linktestButton"> LINK TESTER </button>
-    <button class="basicButton" id=""> FUNCTION 2 </button>
-    <button class="basicButton" id=""> FUNCTION 3 </button>
+      <!-- ===== LINK SCANNER ===== -->
+      <section class="panel" id="panel-link">
+        <h2 class="panelTitle">Link Scanner</h2>
+        <p class="panelSub">Check a URL against VirusTotal &amp; Cloudflare before you visit it.</p>
 
+        <div class="input-wrapper">
+          <span class="url-prefix">https://</span>
+          <input type="text" id="linkInput" placeholder="example.com" autocomplete="off" spellcheck="false">
+        </div>
 
-    <script src="popup.js"></script> 
-  </body>
+        <button class="basicButton primary" id="scanBtn">Analyze Link</button>
+
+        <!-- Hidden until JS removes .hidden and adds .safe / .warn / .danger -->
+        <div id="resultBox" class="result hidden">
+          <p id="resultText"></p>
+        </div>
+      </section>
+
+      <!-- ===== FILE SCANNER ===== -->
+      <section class="panel" id="panel-file">
+        <h2 class="panelTitle">File Scanner</h2>
+        <p class="panelSub">Drop a file to check it for malware.</p>
+
+        <label class="dropzone" for="fileInput">
+          <input type="file" id="fileInput">
+          <div class="dropIcon">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+          </div>
+          <span class="dropMain">Drag &amp; drop a file here</span>
+          <span class="dropSub">or <u>browse</u> · max 32 MB</span>
+        </label>
+
+        <button class="basicButton primary" id="fileScanBtn">Scan File</button>
+
+        <div id="fileResultBox" class="result hidden">
+          <p id="fileResultText"></p>
+        </div>
+      </section>
+
+      <!-- ===== PHISHING TEXT DETECTOR ===== -->
+      <section class="panel" id="panel-text">
+        <h2 class="panelTitle">Phishing Detector</h2>
+        <p class="panelSub">Paste an email or message and AI will flag signs of a scam.</p>
+
+        <textarea id="phishInput" class="textBox" rows="6"
+          placeholder="Paste the suspicious email or text message here…"></textarea>
+
+        <button class="basicButton primary" id="phishBtn">Check for Phishing</button>
+
+        <div id="phishResultBox" class="result hidden">
+          <p id="phishResultText"></p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>Powered by VirusTotal · Cloudflare</span>
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
 </html>
