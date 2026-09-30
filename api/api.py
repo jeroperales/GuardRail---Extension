@@ -91,6 +91,7 @@ def analyzeUrl(url):
     maxAttempts = 20
     reportJsonData = ""
 
+
     for attempt in range(maxAttempts):
         r = httpx.get(reportCall, headers={"Authorization": f"Bearer {apiKey}"})
 
