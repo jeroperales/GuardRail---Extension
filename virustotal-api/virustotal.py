@@ -43,7 +43,7 @@ filetest = { "file": ('virustester.txt', open('virustester.txt', "rb"), "") }
 # print(response)
 
 
-def analyzeFile(files):
+def getAnalysisID(files):
 
     r = httpx.post(
         url='https://www.virustotal.com/api/v3/files',
@@ -54,20 +54,41 @@ def analyzeFile(files):
         },
         timeout=60.0
     )
-
     print (r.status_code)
     print(r.text)
 
     data = r.json()
 
-
-    print(f'THIS IS THE ANALYSIS KEY!!!!: ', {data["data"]["id"]})
-
-  
+    return data["data"]["id"]
 
 
+#analysisResponse = getAnalysisID(filetest)
+
+
+
+def analyzeFile(files):
+
+    analysisResponse = getAnalysisID(files) #CALLS FUNCTION TO GET ANALYSIS RESPONENSE
     
+    url = f'https://www.virustotal.com/api/v3/analyses/{analysisResponse}' #CONCATENATES ANALYSIS ID W/ ANALISIS RESPONSE
+    print(url)
+
+    r = httpx.get(
+        url= url,
+        headers={
+            "x-apikey": apiKey,
+            "accept": "application/json"
+        }
+    )
+
+    print(r.status_code)
+    print(r.text)
+
+
+
+
 analyzeFile(filetest)
+    
 
 
 
