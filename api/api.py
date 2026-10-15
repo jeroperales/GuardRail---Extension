@@ -8,6 +8,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from transformers import pipeline
 
 #This allows specified domains to communicate with the backend
 app = FastAPI()
@@ -118,6 +119,23 @@ async def getUrl(url: Url):
     print(scanResults)
     return scanResults
 
+"""
+Function 2: 
+    Use Hugging face model to read text and give likelyhood of phishing 
+
+    1. Test model works correctly 
+
+    2. get data from the frontend and sent text to hugging face model 
+
+    3. Send response back to the frontend 
+"""
+
+def detectPhishing():
+    clf = pipeline("text-classification", model="ealvaradob/bert-finetuned-phishing")
+    text = "This is not a scam" 
+    print(clf(text))
+
+detectPhishing()
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
 if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5050)
 
