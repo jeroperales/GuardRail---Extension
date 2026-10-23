@@ -37,6 +37,9 @@ AccountID = os.getenv("ACCOUNT_ID")
 class Url(BaseModel):
     url: str
 
+class PhishingText(BaseModel):
+    text: str
+
 
 """
 
@@ -62,6 +65,7 @@ Since data is being used at the same time we can combine the functions as one
 - We need to detect edge cases such as .sites and propper error handling for bad request i.e 
   a site that does not exist we need to let the user know 
 """
+clf = pipeline("text-classification", model="ealvaradob/bert-finetuned-phishing")
 
 #Cloudflare API Request and Response 
 def analyzeUrl(url):
@@ -130,12 +134,16 @@ Function 2:
     3. Send response back to the frontend 
 """
 
-def detectPhishing():
-    clf = pipeline("text-classification", model="ealvaradob/bert-finetuned-phishing")
-    text = "This is not a scam" 
-    print(clf(text))
+def analyzePhishing(text):
+    results = clf(text)
+    return results[0]
 
-detectPhishing()
+@app.post("/scantext/")
+async def getPhishingText(body: PhishingText):
+    phishScore = analyzePhishing(body.text)
+    print(phishScore)
+    return phishScore
+
 # The API offeres a lot of data we can use for now we will focus on the if it returns True or False if a site is malicious
 if __name__ == "__main__": uvicorn.run(app, host="127.0.0.1", port=5050)
 
