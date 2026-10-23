@@ -7,7 +7,6 @@ const phishResultText = document.getElementById('phishResultText'); // same thin
 
 phishScanButton.addEventListener('click', async ()=> {
   const phishText = phishInput.value.trim();
-  console.log("in the button")
 
   const phishUserInput = {
     text: phishText
@@ -31,7 +30,13 @@ phishScanButton.addEventListener('click', async ()=> {
     })
 
     const data = await response.json()
-    phishShowResult(`${} likelihood: ${(data.score * 100).toFixed(1)}%`)
+    phishScore = 0 
+    if (data.label != 'phishing'){
+      phishScore = 1 - data.score
+    }else{
+      phishScore = data.score
+    }
+    phishShowResult(`Phishing likelihood: ${(phishScore * 100).toFixed(1) }%`)
   
   } catch(error){
     phishShowResult('Could not reach the scanner. Try again.', 'danger');

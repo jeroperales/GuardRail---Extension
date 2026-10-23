@@ -135,9 +135,9 @@ Function 2:
 """
 
 def analyzePhishing(text):
-    results = clf(text)
+    results = clf(text, top_k=None)
     return results[0]
-
+## [{label: "phishing", "benign", score: 0.99}]
 @app.post("/scantext/")
 async def getPhishingText(body: PhishingText):
     phishScore = analyzePhishing(body.text)
